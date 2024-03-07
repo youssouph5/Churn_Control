@@ -200,8 +200,8 @@ def main():
                 # Afficher un message de succès
                 st.success("ETL terminé avec succès!") 
                 
-                st.write("Les 5 premières lignes du fichier de la prédiction:")
-                st.write(data.head(10))
+                #st.write("Les 5 premières lignes du fichier de la prédiction:")
+                #st.write(data.head(10))
 
                 st.write("Prédiction en cours...")
 
@@ -220,8 +220,8 @@ def main():
                 pred_dt[f"PREDICTION_{seuil_proba}%"] = pred_dt['PROBA_CHURN%'].apply(lambda x: determiner_contrat(x, seuil_proba))
 
                 # Affichage des 5 premières lignes
-                #st.write("Les 5 premières lignes du fichier de la prédiction:")
-                #st.write(pred_dt.head(10))
+                st.write("Les 5 premières lignes du fichier de la prédiction:")
+                st.write(pred_dt.head(10))
 
                 # Affichage des dimensions du fichier
                 st.write(f"Le fichier comporte : {pred_dt.shape[0]} lignes, et {pred_dt.shape[1]} colonnes")
