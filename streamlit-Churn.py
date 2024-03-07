@@ -8,6 +8,8 @@ import streamlit as st
 import joblib
 import time
 import io
+import requests
+from io import BytesIO
 import base64
 
 st.set_page_config(layout="wide")
@@ -126,7 +128,13 @@ def perform_prediction(df_pred):
 
     data = df_pred.copy()
 
-    XGB_model = joblib.load('Meryem260124.joblib')
+    # Télécharger le modèle depuis GitHub
+    #model_url = "https://raw.githubusercontent.com/VotreNom/VotreRepo/main/model.joblib"
+    model_url = "https://github.com/youssouph5/Churn_Control/main/Model_Churn151223.joblib"
+    response = requests.get(model_url)
+    model_file = BytesIO(response.content)
+
+    XGB_model = joblib.load(model_file)
 
     # Effectuer la prédiction
     data['PREDICTION'] = XGB_model.predict(data.iloc[:, 3:])
