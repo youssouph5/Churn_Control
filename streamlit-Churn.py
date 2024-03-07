@@ -12,7 +12,7 @@ import requests
 from io import BytesIO
 import base64
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide") 
 
 # Titre de l'application
 st.markdown("<h1 style='text-align:center; color: Green;'>Churn Contol</h1>", unsafe_allow_html=True)
