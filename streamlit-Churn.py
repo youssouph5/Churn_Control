@@ -125,22 +125,23 @@ def perform_etl(data):
 
 # Fonction pour effectuer la prédiction
 def perform_prediction(df_pred):
-
     data = df_pred.copy()
 
     # Télécharger le modèle depuis GitHub
-    #model_url = "https://raw.githubusercontent.com/VotreNom/VotreRepo/main/model.joblib" "https://github.com/youssouph5/Churn_Control/raw/main/Model_Churn151223.joblib"
     model_url = "https://github.com/youssouph5/Churn_Control/raw/main/Model_Churn151223.joblib"
     response = requests.get(model_url)
-    model_file = BytesIO(response.content)
 
-    XGB_model = joblib.load(model_file)
+    # Gestion des erreurs
+    if response.status_code == 200:
+        model_file = BytesIO(response.content)
+        XGB_model = joblib.load(model_file)
 
-    # Effectuer la prédiction
-    data['PREDICTION'] = XGB_model.predict(data.iloc[:, 3:])
-    data['PREDICTION'] = data['PREDICTION'].apply(lambda x: "N" if x == 1 else "O")
-
-    data['PROBA_CHURN%'] = (XGB_model.predict_proba(data.iloc[:, 3:])[:, 1] * 100).round(2)
+        # Effectuer la prédiction
+        data['PREDICTION'] = XGB_model.predict(data.iloc[:, 3:])
+        data['PREDICTION'] = data['PREDICTION'].apply(lambda x: "N" if x == 1 else "O")
+        data['PROBA_CHURN%'] = (XGB_model.predict_proba(data.iloc[:, 3:])[:, 1] * 100).round(2)
+    else:
+        print(f"Erreur lors du téléchargement du modèle. Statut de la réponse : {response.status_code}")
 
     return data
 
