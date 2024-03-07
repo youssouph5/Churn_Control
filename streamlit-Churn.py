@@ -129,8 +129,8 @@ def perform_prediction(df_pred):
     data = df_pred.copy()
 
     # Télécharger le modèle depuis GitHub
-    #model_url = "https://raw.githubusercontent.com/VotreNom/VotreRepo/main/model.joblib"
-    model_url = "https://github.com/youssouph5/Churn_Control/blob/main/Model_Churn151223.joblib"
+    #model_url = "https://raw.githubusercontent.com/VotreNom/VotreRepo/main/model.joblib" "https://github.com/youssouph5/Churn_Control/raw/main/Model_Churn151223.joblib"
+    model_url = "https://github.com/youssouph5/Churn_Control/raw/main/Model_Churn151223.joblib"
     response = requests.get(model_url)
     model_file = BytesIO(response.content)
 
